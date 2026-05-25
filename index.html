@@ -42,30 +42,24 @@
 
         function updateState() {
             const now = new Date();
-            const seconds = now.getSeconds();
-            const isEven = Math.floor(seconds / 5) % 2 === 0;
+            const utcHour = now.getUTCHours();
+            const isDaytime = utcHour >= 6 && utcHour < 18;
             
-            if (lastState !== isEven) {
-                lastState = isEven;
+            if (lastState !== isDaytime) {
+                lastState = isDaytime;
                 
-                if (isEven) {
-                    imgElement.src = 'off.jpg';
-                    document.body.style.backgroundColor = '#313131'; 
-                } else {
+                if (isDaytime) {
                     imgElement.src = 'on.jpg';
                     document.body.style.backgroundColor = '#ffffff'; 
+                } else {
+                    imgElement.src = 'off.jpg';
+                    document.body.style.backgroundColor = '#313131'; 
                 }
             }
         }
 
         updateState();
-        
-        function loop() {
-            updateState();
-            requestAnimationFrame(loop);
-        }
-        
-        requestAnimationFrame(loop);
+        setInterval(updateState, 60000);
     </script>
 </body>
 </html>
