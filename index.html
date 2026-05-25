@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cero None</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #image-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+    <div id="image-container">
+        <img id="main-image" src="" alt="Cero None">
+    </div>
+
+    <script>
+        const imgElement = document.getElementById('main-image');
+        
+        let lastState = null;
+
+        function updateState() {
+            const now = new Date();
+            const seconds = now.getSeconds();
+            const isEven = Math.floor(seconds / 5) % 2 === 0;
+            
+            if (lastState !== isEven) {
+                lastState = isEven;
+                
+                if (isEven) {
+                    imgElement.src = 'off.jpg';
+                    document.body.style.backgroundColor = '#313131'; 
+                } else {
+                    imgElement.src = 'on.jpg';
+                    document.body.style.backgroundColor = '#ffffff'; 
+                }
+            }
+        }
+
+        updateState();
+        
+        function loop() {
+            updateState();
+            requestAnimationFrame(loop);
+        }
+        
+        requestAnimationFrame(loop);
+    </script>
+</body>
+</html>
